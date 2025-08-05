@@ -5,9 +5,12 @@ public class StopwatchFrame extends JFrame {
 
     private JLabel timeLabel;
     private JButton startBtn, stopBtn, resetBtn, lapBtn;
-
+    private Timer timer;
+    private int elapsedTime=0;
+    
+    
     public StopwatchFrame() {
-        setTitle("Stopwatch - Update 1");
+        setTitle("Stopwatch");
         setSize(370, 200);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -15,7 +18,7 @@ public class StopwatchFrame extends JFrame {
 
         timeLabel = new JLabel("00:00:00:00");
         timeLabel.setFont(new Font("Verdana", Font.PLAIN, 26));
-        timeLabel.setBounds(50, 20, 250, 30);
+        timeLabel.setBounds(90, 20, 250, 30);
         add(timeLabel);
 
         startBtn = new JButton("Start");
@@ -36,6 +39,24 @@ public class StopwatchFrame extends JFrame {
             btn.setFocusPainted(false);
             add(btn);
         }
+
+        timer = new Timer(10, e -> {
+            elapsedTime += 10;
+            int totalSec = elapsedTime / 1000;
+            int hrs = totalSec / 3600;
+            int mins = (totalSec % 3600) / 60;
+            int secs = totalSec % 60;
+            int millis = (elapsedTime % 1000) / 10;
+            timeLabel.setText(String.format("%02d:%02d:%02d:%02d", hrs, mins, secs, millis));
+        });
+
+        startBtn.addActionListener(e -> timer.start());
+        stopBtn.addActionListener(e -> timer.stop());
+        resetBtn.addActionListener(e -> {
+            timer.stop();
+            elapsedTime = 0;
+            timeLabel.setText("00:00:00:00");
+        });
 
         setVisible(true);
     }
