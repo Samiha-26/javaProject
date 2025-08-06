@@ -7,11 +7,12 @@ public class StopwatchFrame extends JFrame {
     private JButton startBtn, stopBtn, resetBtn, lapBtn;
     private Timer timer;
     private int elapsedTime=0;
-    
+    private JTextArea lapArea;
+    private JScrollPane scrollPane;
     
     public StopwatchFrame() {
         setTitle("Stopwatch");
-        setSize(370, 200);
+        setSize(370, 380);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -39,6 +40,12 @@ public class StopwatchFrame extends JFrame {
             btn.setFocusPainted(false);
             add(btn);
         }
+        
+        lapArea = new JTextArea();
+        lapArea.setEditable(false);
+        scrollPane = new JScrollPane(lapArea);
+        scrollPane.setBounds(20, 120, 320, 170);
+        add(scrollPane);
 
         timer = new Timer(10, e -> {
             elapsedTime += 10;
@@ -56,8 +63,9 @@ public class StopwatchFrame extends JFrame {
             timer.stop();
             elapsedTime = 0;
             timeLabel.setText("00:00:00:00");
+            lapArea.setText("");
         });
-
+        lapBtn.addActionListener(e -> lapArea.append(timeLabel.getText() + "\n"));
         setVisible(true);
     }
 }
