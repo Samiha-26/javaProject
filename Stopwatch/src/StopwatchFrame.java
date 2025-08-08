@@ -46,7 +46,46 @@ public class StopwatchFrame extends JFrame {
         scrollPane = new JScrollPane(lapArea);
         scrollPane.setBounds(20, 120, 320, 170);
         add(scrollPane);
+        
+        JCheckBox darkModeCheck = new JCheckBox("Dark Mode");
+        darkModeCheck.setBounds(20, 300, 120, 30);
+        darkModeCheck.setFont(new Font("Arial", Font.PLAIN, 12));
+        add(darkModeCheck);
 
+        darkModeCheck.addActionListener(e -> {
+            if (darkModeCheck.isSelected()) {
+                // Dark Mode
+                Color bg = Color.BLACK;
+                Color fg = Color.GREEN;
+
+                getContentPane().setBackground(bg);
+                timeLabel.setForeground(fg);
+                lapArea.setBackground(bg);
+                lapArea.setForeground(fg);
+                scrollPane.setBackground(bg);
+                scrollPane.setForeground(fg);
+                darkModeCheck.setBackground(bg);
+                darkModeCheck.setForeground(fg);
+                darkModeCheck.setOpaque(true);
+                darkModeCheck.setFocusPainted(false);
+                darkModeCheck.setBorderPainted(false);
+
+            } else {
+                // Light Mode
+                Color bg = Color.WHITE;
+                Color fg = Color.BLACK;
+
+                getContentPane().setBackground(bg);
+                timeLabel.setForeground(fg);
+                lapArea.setBackground(Color.WHITE);
+                lapArea.setForeground(fg);
+                scrollPane.setBackground(bg);
+                scrollPane.setForeground(fg);
+                darkModeCheck.setBackground(bg);
+                darkModeCheck.setForeground(fg);
+            }
+        });
+        
         timer = new Timer(10, e -> {
             elapsedTime += 10;
             int totalSec = elapsedTime / 1000;
